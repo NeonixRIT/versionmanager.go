@@ -12,32 +12,34 @@ versionmanager checks the version passed to its constructor against the tag atta
 ```
 package main
 
-import { 
+import (
 	"fmt"
-	"versionmanagergo"
-	}
+
+	vmg "github.com/NeonixRIT/versionmanager.go"
+)
 
 func main() {
-	vm := versionmanagergo.MakeVersionManager("Aquatic-Labs", "Umbra-Mod-Menu", "2.0.5")
-	
-	vm.RegisterObserver(func(status int, data versionmanagergo.Release) {
-		if status == versionmanagergo.Status.Outdated {
-			fmt.PrintLn("Outdated.")
+	vm := vmg.MakeVersionManager("Aquatic-Labs", "Umbra-Mod-Menu", "2.0.4")
+
+	vm.RegisterObserver(func(status vmg.Status, data vmg.Release) {
+		if status == vmg.OUTDATED {
+			fmt.Println("Outdated.")
 		}
 	})
-	
-	vm.RegisterObserver(func(status int, data versionmanagergo.Release) {
-		if status == versionmanagergo.Status.Current {
-			fmt.PrintLn("Current.")
+
+	vm.RegisterObserver(func(status vmg.Status, data vmg.Release) {
+		if status == vmg.CURRENT {
+			fmt.Println("Current.")
 		}
 	})
-	
-	vm.RegisterObserver(func(status int, data versionmanagergo.Release) {
-		if status == versionmanagergo.Status.Dev {
-			fmt.PrintLn("Dev.")
+
+	vm.RegisterObserver(func(status vmg.Status, data vmg.Release) {
+		if status == vmg.DEV {
+			fmt.Println("Dev.")
 		}
 	})
-	
+
 	vm.CheckStatus()
 }
+
 ``` 
