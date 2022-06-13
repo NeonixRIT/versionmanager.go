@@ -1,4 +1,4 @@
-package versionmanager
+package versionmanagergo
 
 // Release represents a parsed GitHub release API JSON. This does not contain all the information contained in the JSON
 type Release struct {

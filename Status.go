@@ -1,8 +1,14 @@
-package versionmanager
+package versionmanagergo
 
 // Status variables
+type Status int
+
 const (
-	OUTDATED int = -1
-	CURRENT      = 0
-	DEV          = 1
+	OUTDATED Status = -1
+	CURRENT  Status = 0
+	DEV      Status = 1
 )
+
+func (s Status) Base() int {
+	return int(s)
+}

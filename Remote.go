@@ -1,4 +1,4 @@
-package versionmanager
+package versionmanagergo
 
 import (
 	"encoding/json"

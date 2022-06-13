@@ -1,4 +1,4 @@
-package versionmanager
+package versionmanagergo
 
 import (
 	"strconv"
@@ -22,13 +22,13 @@ func (v version) compareTo(o version) int {
 		}
 
 		if thisVer < otherVer {
-			return OUTDATED
+			return OUTDATED.Base()
 		} else if thisVer > otherVer {
-			return DEV
+			return DEV.Base()
 		}
 		i++
 	}
-	return CURRENT
+	return CURRENT.Base()
 }
 
 // makeVersion creates comparable instance of a project's version number

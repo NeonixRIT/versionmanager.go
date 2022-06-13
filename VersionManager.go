@@ -1,4 +1,4 @@
-package versionmanager
+package versionmanagergo
 
 // VersionManager is The main struct to compare a local project to the latest GitHub release and perform actions based on the result
 type VersionManager struct {
@@ -7,8 +7,8 @@ type VersionManager struct {
 	separator string
 	local     local
 	remote    remote
-	status    int
-	observers []func(status int, data Release)
+	status    Status
+	observers []func(status Status, data Release)
 }
 
 // notifyObservers invokes all observers when check status is called. status should be used to tell the observer if it should do anything or not
@@ -19,17 +19,17 @@ func (vm *VersionManager) notifyObservers() {
 }
 
 // RegisterObserver registers a function to be triggered whenever CheckStatus is called
-func (vm *VersionManager) RegisterObserver(observer func(status int, data Release)) {
+func (vm *VersionManager) RegisterObserver(observer func(status Status, data Release)) {
 	vm.observers = append(vm.observers, observer)
 }
 
 // RegisterObservers registers multiple functions to be triggered whenever CheckStatus is called
-func (vm *VersionManager) RegisterObservers(observers []func(status int, data Release)) {
+func (vm *VersionManager) RegisterObservers(observers []func(status Status, data Release)) {
 	vm.observers = append(vm.observers, observers...)
 }
 
 // CheckStatus compares local project version to the latest GitHub release version. Trigger events based on comparison result
-func (vm *VersionManager) CheckStatus() int {
+func (vm *VersionManager) CheckStatus() Status {
 	vm.remote.refresh()
 
 	if vm.local.Version.compareTo(vm.remote.Version) == 0 {
@@ -53,7 +53,7 @@ func MakeVersionManager(author string, projectName string, localVersion string) 
 		local:     local{Author: author, Name: projectName, Version: makeVersion(localVersion, sep)},
 		remote:    makeRemote(author, projectName, sep),
 		status:    0,
-		observers: []func(status int, data Release){},
+		observers: []func(status Status, data Release){},
 	}
 	return vm
 }
@@ -67,7 +67,7 @@ func MakeVersionManagerSep(author string, projectName string, localVersion strin
 		local:     local{Author: author, Name: projectName, Version: makeVersion(localVersion, separator)},
 		remote:    makeRemote(author, projectName, separator),
 		status:    0,
-		observers: []func(status int, data Release){},
+		observers: []func(status Status, data Release){},
 	}
 	return vm
 }

@@ -1,4 +1,4 @@
-package versionmanager
+package versionmanagergo
 
 // local representation of project version a user is currently using.
 type local struct {
